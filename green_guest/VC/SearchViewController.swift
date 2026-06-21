@@ -11,6 +11,7 @@ import SnapKit
 class SearchViewController: UIViewController{
     
     private let router: AppRouterProtocol
+    private let emptyView = ImageTitleSubtitleView(imageStr: .notfoundicon, titleStr: "Uyğun nəticə tapılmadı", subtitleStr: "Axtarışınıza uyğun heç bir elan tapılmadı. Fərqli açar sözlərlə yenidən cəhd edin.")
     
     init(router: AppRouterProtocol) {
         self.router = router
@@ -23,5 +24,15 @@ class SearchViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLayout()
+    }
+    
+    private func setupLayout() {
+        view.addSubview(emptyView)
+        
+        emptyView.snp.makeConstraints { make in
+            make.trailing.leading.equalToSuperview().inset(16)
+            make.center.equalToSuperview()
+        }
     }
 }

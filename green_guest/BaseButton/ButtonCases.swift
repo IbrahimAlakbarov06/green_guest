@@ -8,8 +8,8 @@
 import UIKit
 
 enum ButtonCases {
-    case main
-    case login
+    case main(title: String)
+//    case login
 //    case register
     case google
     case apple

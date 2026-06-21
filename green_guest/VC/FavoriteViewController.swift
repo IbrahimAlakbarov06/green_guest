@@ -11,7 +11,7 @@ import SnapKit
 class FavoriteViewController: UIViewController{
     
     private let router: AppRouterProtocol
-    private let 
+    private let emptyView = ImageTitleSubtitleView(imageStr: .notfoundicon, titleStr: "Seçilmiş elan tapılmadı", subtitleStr: "Elanları sevimlilərə əlavə edərək bu səhifədən izləyə bilərsiniz")
     
     init(router: AppRouterProtocol) {
         self.router = router
@@ -24,5 +24,15 @@ class FavoriteViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLayout()
+    }
+    
+    private func setupLayout() {
+        view.addSubview(emptyView)
+        
+        emptyView.snp.makeConstraints { make in
+            make.trailing.leading.equalToSuperview().inset(16)
+            make.center.equalToSuperview()
+        }
     }
 }

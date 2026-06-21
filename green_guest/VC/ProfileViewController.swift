@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController{
     private let changePasswordLabel = UILabel()
     private let iconWithTextStack = UIStackView()
     
-    private let updateBtn = BaseButton(buttonStyle: .main)
+    private let updateBtn = BaseButton(buttonStyle: .main(title: "Yeniləyin"))
     private let changePasswordStack = UIStackView()
         
     private let logoutIcon = UIImageView()
@@ -54,12 +54,26 @@ class ProfileViewController: UIViewController{
     }
     
     private func setupUI() {
+        avatarImg.image = UIImage(named: "profileAvatar")
+        
         emailLabel.font = .systemFont(ofSize: 16, weight: .medium)
         emailLabel.textColor = .label
             
-        editBtn.setTitle("Redaktə et", for: .normal)
-        editBtn.setTitleColor(.systemGreen, for: .normal)
+        editBtn.setTitle("Düzəliş edin", for: .normal)
+        editBtn.setTitleColor(.black, for: .normal)
         editBtn.titleLabel?.font = .systemFont(ofSize: 14)
+        editBtn.layer.borderWidth = 1
+        editBtn.layer.borderColor = UIColor.systemGray4.cgColor
+        editBtn.layer.cornerRadius = 18
+        editBtn.setImage(UIImage(named: "editIcon"), for: .normal)
+        
+        changePasswordIcon.image = UIImage(named: "changePassIcon")
+        changePasswordLabel.text = "Şifrənizi dəyişin"
+        changePasswordLabel.textColor = .black
+        changePasswordLabel.font = .systemFont(ofSize: 18)
+        
+        
+        
         
     }
     
@@ -71,6 +85,7 @@ class ProfileViewController: UIViewController{
         [avatarImg, emailWithEditStack].forEach{upStack.addArrangedSubview($0)}
         upStack.axis = .horizontal
         upStack.spacing = 12
+        upStack.alignment = .center
         
         [changePasswordIcon, changePasswordLabel].forEach{iconWithTextStack.addArrangedSubview($0)}
         iconWithTextStack.axis = .horizontal
@@ -78,7 +93,9 @@ class ProfileViewController: UIViewController{
         
         [iconWithTextStack, updateBtn].forEach{changePasswordStack.addArrangedSubview($0)}
         changePasswordStack.axis = .horizontal
-        changePasswordStack.spacing = 87
+        changePasswordStack.alignment = .center
+        changePasswordStack.distribution = .equalSpacing
+               
         
         [logoutIcon, logoutLabel].forEach { logoutStack.addArrangedSubview($0) }
         logoutStack.axis = .horizontal
@@ -107,6 +124,11 @@ class ProfileViewController: UIViewController{
         editBtn.snp.makeConstraints { make in
             make.height.equalTo(36)
             make.width.equalTo(151)
+        }
+        
+        updateBtn.snp.makeConstraints { make in
+            make.height.equalTo(30)
+            make.width.equalTo(100)
         }
     }
     

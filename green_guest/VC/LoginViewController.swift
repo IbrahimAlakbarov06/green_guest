@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
     private let forgotPasswordBtn = UIButton()
     private let inputWithForgotStack = UIStackView()
     
-    private let loginBtn = BaseButton(buttonStyle: .login)
+    private let loginBtn = BaseButton(buttonStyle: .main(title: "Daxil olun"))
     
     private let orLabel = UILabel()
     private let leftLine = UIView()

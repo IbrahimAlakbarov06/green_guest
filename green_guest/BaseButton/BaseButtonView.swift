@@ -18,8 +18,8 @@ class BaseButton: UIButton {
     
     private func setupStyle() {
         switch buttonStyle {
-        case .login:
-            loginStyle()
+//        case .login:
+//            loginStyle()
         case .google:
             googleStyle()
         case .apple:
@@ -28,19 +28,20 @@ class BaseButton: UIButton {
             guestStyle()
         case .submit:
             submitStyle()
-        case .main:
-            mainStyle()
+        case .main(let title):
+            mainStyle(title: title)
         }
 
     }
     
-    private func loginStyle() {
-        self.setTitle("Daxil olun", for: .normal)
-        self.setTitleColor(.white, for: .normal)
-        self.backgroundColor = .maincolour
-    }
+//    private func loginStyle() {
+//        self.setTitle("Daxil olun", for: .normal)
+//        self.setTitleColor(.white, for: .normal)
+//        self.backgroundColor = .maincolour
+//    }
     
-    private func mainStyle() {
+    private func mainStyle(title: String) {
+        self.setTitle(title, for: .normal)
         self.setTitleColor(.white, for: .normal)
         self.backgroundColor = .maincolour
     }
