@@ -10,13 +10,8 @@ import SnapKit
 
 class LoginViewController: UIViewController {
     
-    private let azBtn = UIButton()
-    private let symbolLang = UILabel()
-    private let enBtn = UIButton()
-    private let languageStack = UIStackView()
-    
-    private let isAzSelected = true
-    
+    private let languageSwitchView = LanguageSwitchView()
+
     private let welcomeLabel = UILabel()
     
     private let phoneTf = BaseTextFieldView(textFieldStyle: .phoneNum, 0)
@@ -27,12 +22,9 @@ class LoginViewController: UIViewController {
     private let forgotPasswordBtn = UIButton()
     private let inputWithForgotStack = UIStackView()
     
-    private let loginBtn = BaseButton(buttonStyle: .main(title: "Daxil olun"))
+    private let orStack = OrView()
     
-    private let orLabel = UILabel()
-    private let leftLine = UIView()
-    private let rightLine = UIView()
-    private let orStack = UIStackView()
+    private let loginBtn = BaseButton(buttonStyle: .main(title: "Daxil olun"))
     
     private let googleBtn = BaseButton(buttonStyle: .google)
     private let appleBtn = BaseButton(buttonStyle: .apple)
@@ -83,13 +75,6 @@ class LoginViewController: UIViewController {
     }
 
     private func setupUI() {
-        azBtn.setTitle("AZ", for: .normal)
-        azBtn.setTitleColor(.black, for: .normal)
-        enBtn.setTitle("EN", for: .normal)
-        enBtn.setTitleColor(.gray, for: .normal)
-        symbolLang.text = "|"
-        symbolLang.textColor = .gray
-        
         welcomeLabel.text = "Xoş gəlmisiniz!"
         welcomeLabel.font = .systemFont(ofSize: 28, weight: .bold)
         welcomeLabel.textColor = .black
@@ -98,12 +83,6 @@ class LoginViewController: UIViewController {
         forgotPasswordBtn.setTitleColor(.maincolour, for: .normal)
         forgotPasswordBtn.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         forgotPasswordBtn.contentHorizontalAlignment = .right
-        
-        orLabel.text = "Və ya"
-        orLabel.textColor = .gray
-        orLabel.font = .systemFont(ofSize: 14)
-        leftLine.backgroundColor = .systemGray4
-        rightLine.backgroundColor = .systemGray4
         
         registerLabel.text = "Hesabınız yoxdur?"
         registerLabel.textColor = .gray
@@ -115,10 +94,6 @@ class LoginViewController: UIViewController {
     }
     
     private func setupLayout() {
-        [azBtn, symbolLang, enBtn].forEach {languageStack.addArrangedSubview($0)}
-        languageStack.axis = .horizontal
-        languageStack.spacing = 2
-        
         [phoneTf, emailTf, passwordTf].forEach{inputStack.addArrangedSubview($0)}
         inputStack.axis = .vertical
         inputStack.spacing = 16
@@ -126,11 +101,6 @@ class LoginViewController: UIViewController {
         [inputStack, forgotPasswordBtn].forEach{inputWithForgotStack.addArrangedSubview($0)}
         inputWithForgotStack.axis = .vertical
         inputWithForgotStack.spacing = 8
-        
-        [leftLine, orLabel, rightLine].forEach{orStack.addArrangedSubview($0)}
-        orStack.axis = .horizontal
-        orStack.spacing = 12
-        orStack.alignment = .center
         
         [googleBtn, appleBtn, guestBtn].forEach{socialStack.addArrangedSubview($0)}
         socialStack.axis = .vertical
@@ -149,28 +119,20 @@ class LoginViewController: UIViewController {
         registerStack.spacing = 4
         registerStack.alignment = .center
         
-        [languageStack, mainStack, registerStack].forEach{view.addSubview($0)}
+        [languageSwitchView, mainStack, registerStack].forEach{view.addSubview($0)}
         
-        languageStack.snp.makeConstraints { make in
+        languageSwitchView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
             make.trailing.equalToSuperview().inset(14)
         }
         
         mainStack.snp.makeConstraints { make in
-            make.top.equalTo(languageStack.snp.bottom).offset(8)
+            make.top.equalTo(languageSwitchView.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
         }
         
         buttonStack.snp.makeConstraints { make in
             make.top.equalTo(inputWithForgotStack.snp.bottom).offset(28)
-        }
-        
-        leftLine.snp.makeConstraints { make in
-            make.height.equalTo(1)
-        }
-        rightLine.snp.makeConstraints { make in
-            make.height.equalTo(1)
-            make.width.equalTo(leftLine)
         }
         
         registerStack.snp.makeConstraints { make in
@@ -180,34 +142,21 @@ class LoginViewController: UIViewController {
     }
     
     private func setupActions() {
-        azBtn.tag = 0
-        enBtn.tag = 1
-        
-        azBtn.addTarget(self, action: #selector(toggleLanguage(_ :)) , for: .touchUpInside)
-        enBtn.addTarget(self, action: #selector(toggleLanguage(_ :)) , for: .touchUpInside)
-        
         forgotPasswordBtn.addTarget(self, action: #selector(didTapForgotPassword), for: .touchUpInside)
         
         loginBtn.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
 
-    }
-    
-    @objc
-    private func toggleLanguage(_ sender: UIButton){
-        switch sender.tag {
-        case 0:
-            azBtn.setTitleColor(UIColor.black, for: .normal)
-            enBtn.setTitleColor(UIColor.gray, for: .normal)
-        case 1:
-            azBtn.setTitleColor(UIColor.gray, for: .normal)
-            enBtn.setTitleColor(UIColor.black, for: .normal)
-        default: return
-        }
+        registerBtn.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
     }
     
     @objc
     private func didTapForgotPassword() {
         router.pushVC(from: self, to: router.forgotPasswordViewController())
+    }
+    
+    @objc
+    private func didTapRegister() {
+        router.pushVC(from: self, to: router.registerViewController())
     }
     
     

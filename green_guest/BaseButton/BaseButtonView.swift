@@ -44,6 +44,7 @@ class BaseButton: UIButton {
         self.setTitle(title, for: .normal)
         self.setTitleColor(.white, for: .normal)
         self.backgroundColor = .maincolour
+        self.titleLabel?.font = .systemFont(ofSize: 16)
     }
     
     private func googleStyle() {

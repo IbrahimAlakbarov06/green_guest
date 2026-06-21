@@ -12,4 +12,5 @@ enum TextFieldCases {
     case phoneNum
     case email
     case password
+    case name(label: String, placeholder: String)
 }

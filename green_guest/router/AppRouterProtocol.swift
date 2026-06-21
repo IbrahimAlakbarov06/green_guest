@@ -18,4 +18,5 @@ protocol AppRouterProtocol {
     func searchViewController() -> UIViewController
     func loginViewController() -> UIViewController
     func pushVC(from first: UIViewController, to second: UIViewController)
+    func registerViewController() -> UIViewController
 }

@@ -27,6 +27,10 @@ class AppRouter: AppRouterProtocol {
         ForgotPasswordViewController(router: self)
     }
     
+    func registerViewController() -> UIViewController {
+        RegisterViewController(router: self)
+    }
+    
     func loginViewController()-> UIViewController{
         LoginViewController(router: self)
     }

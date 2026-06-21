@@ -41,6 +41,8 @@ class BaseTextFieldView: UIView {
             emailTfDesign()
         case .password:
             passwordTfDesign()
+        case .name(let label, let placeholder):
+                nameTfDesign(label: label, placeholder: placeholder)
         }
     }
     
@@ -52,6 +54,7 @@ class BaseTextFieldView: UIView {
         secondLabel.font = UIFont(name: "DMSans-Regular", size: 16)
         secondLabel.textColor = .black
         inputTf.placeholder = "XX XXX XX XX"
+        
         
         horizontalStack.addArrangedSubview(secondLabel)
         horizontalStack.addArrangedSubview(inputTf)
@@ -84,9 +87,16 @@ class BaseTextFieldView: UIView {
         }
     }
     
+    func nameTfDesign(label: String, placeholder: String) {
+        firstLabel.text = label
+        firstLabel.textColor = .gray
+        inputTf.placeholder = placeholder
+        horizontalStack.addArrangedSubview(inputTf)
+    }
+    
     func designView() {
-        self.backgroundColor = .white
-        self.layer.borderWidth = 1
+        self.backgroundColor = .systemGray6
+        self.layer.borderWidth = 0
         self.layer.cornerRadius = 29
 
         self.addSubview(verticalStack)

@@ -23,10 +23,8 @@ class ProfileViewController: UIViewController{
     private let updateBtn = BaseButton(buttonStyle: .main(title: "Yeniləyin"))
     private let changePasswordStack = UIStackView()
         
-    private let logoutIcon = UIImageView()
-    private let logoutLabel = UILabel()
-    private let logoutStack = UIStackView()
-        
+    private let logoutBtn = UIButton()
+
     private let upStack = UIStackView()
     private let downStack = UIStackView()
     
@@ -50,6 +48,7 @@ class ProfileViewController: UIViewController{
         view.backgroundColor = .systemBackground
         setupUI()
         setupLayout()
+        setupActions()
         showEmail()
     }
     
@@ -72,15 +71,19 @@ class ProfileViewController: UIViewController{
         changePasswordLabel.textColor = .black
         changePasswordLabel.font = .systemFont(ofSize: 18)
         
-        
-        
-        
+        updateBtn.layer.cornerRadius = 15
+
+        logoutBtn.setTitle("Çıxış et", for: .normal)
+        logoutBtn.setTitleColor(.red, for: .normal)
+        logoutBtn.setImage(UIImage(named: "logoutIcon"), for: .normal)
+        logoutBtn.titleLabel?.font = .systemFont(ofSize: 18)
     }
     
     private func setupLayout() {
         [emailLabel, editBtn].forEach{emailWithEditStack.addArrangedSubview($0)}
         emailWithEditStack.axis = .vertical
         emailWithEditStack.spacing = 8
+        emailWithEditStack.alignment = .leading
         
         [avatarImg, emailWithEditStack].forEach{upStack.addArrangedSubview($0)}
         upStack.axis = .horizontal
@@ -95,14 +98,8 @@ class ProfileViewController: UIViewController{
         changePasswordStack.axis = .horizontal
         changePasswordStack.alignment = .center
         changePasswordStack.distribution = .equalSpacing
-               
-        
-        [logoutIcon, logoutLabel].forEach { logoutStack.addArrangedSubview($0) }
-        logoutStack.axis = .horizontal
-        logoutStack.spacing = 8
-        logoutStack.alignment = .center
             
-        [changePasswordStack, logoutStack].forEach { downStack.addArrangedSubview($0) }
+        [changePasswordStack, logoutBtn].forEach { downStack.addArrangedSubview($0) }
         downStack.axis = .vertical
         downStack.spacing = 20
             
@@ -132,7 +129,16 @@ class ProfileViewController: UIViewController{
         }
     }
     
+    private func setupActions() {
+        logoutBtn.addTarget(self, action: #selector(didTapLogoutBtn), for: .touchUpInside)
+    }
+    
     private func showEmail() {
         emailLabel.text = user.email
+    }
+    
+    @objc
+    private func didTapLogoutBtn() {
+        router.changeRootViewController(vc: router.loginViewController())
     }
 }
