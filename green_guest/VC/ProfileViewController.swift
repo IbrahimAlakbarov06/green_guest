@@ -131,6 +131,7 @@ class ProfileViewController: UIViewController{
     
     private func setupActions() {
         logoutBtn.addTarget(self, action: #selector(didTapLogoutBtn), for: .touchUpInside)
+        editBtn.addTarget(self, action: #selector(didTapEditBtn), for: .touchUpInside)
     }
     
     private func showEmail() {
@@ -140,5 +141,10 @@ class ProfileViewController: UIViewController{
     @objc
     private func didTapLogoutBtn() {
         router.changeRootViewController(vc: router.loginViewController())
+    }
+    
+    @objc
+    private func didTapEditBtn() {
+        router.pushVC(from: self, to: router.updateProfileViewController())
     }
 }

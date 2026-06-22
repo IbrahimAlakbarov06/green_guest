@@ -17,12 +17,12 @@ class RegisterViewController: UIViewController{
     private let descriptionLabel = UILabel()
     private let textStack = UIStackView()
     
-    private let firstNameTf = BaseTextFieldView(textFieldStyle: .name(label: "Adınız", placeholder: "Adınızı daxil edin"))
-    private let lastNameTf = BaseTextFieldView(textFieldStyle: .name(label: "Soyadınız", placeholder: "Soyadınızı daxil edin"))
-    private let emailTf = BaseTextFieldView(textFieldStyle: .email)
-    private let phoneTf = BaseTextFieldView(textFieldStyle: .phoneNum)
+    private let firstNameTf = BaseTextFieldView(textFieldStyle: .name(label: "Adınız", placeholder: "Adınızı daxil edin"), 0)
+    private let lastNameTf = BaseTextFieldView(textFieldStyle: .name(label: "Soyadınız", placeholder: "Soyadınızı daxil edin"), 1)
+    private let emailTf = BaseTextFieldView(textFieldStyle: .email, 2)
+    private let phoneTf = BaseTextFieldView(textFieldStyle: .phoneNum, 3)
     
-    private let passwordTf = BaseTextFieldView(textFieldStyle: .password)
+    private let passwordTf = BaseTextFieldView(textFieldStyle: .password, 4)
     private let passwordValidationText = UILabel()
     private let passwordWithTextStack = UIStackView()
     
@@ -70,6 +70,8 @@ class RegisterViewController: UIViewController{
         setupUI()
         setupLayout()
         setupActions()
+        
+        delegateTextField()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,6 +82,14 @@ class RegisterViewController: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    private func delegateTextField() {
+        firstNameTf.inputTf.delegate = self
+        lastNameTf.inputTf.delegate = self
+        emailTf.inputTf.delegate = self
+        phoneTf.inputTf.delegate = self
+        passwordTf.inputTf.delegate = self
     }
     
     private func setupUI() {

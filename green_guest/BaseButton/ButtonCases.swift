@@ -11,6 +11,7 @@ enum ButtonCases {
     case main(title: String)
 //    case login
 //    case register
+    case cancel
     case google
     case apple
     case guest

@@ -50,4 +50,8 @@ class AppRouter: AppRouterProtocol {
     func pushVC(from first: UIViewController, to second: UIViewController) {
         first.navigationController?.pushViewController(second, animated: true)
     }
+    
+    func updateProfileViewController() -> UIViewController {
+        UpdateProfileViewController(router: self)
+    }
 }

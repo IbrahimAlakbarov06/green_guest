@@ -16,7 +16,7 @@ class LoginViewController: UIViewController {
     
     private let phoneTf = BaseTextFieldView(textFieldStyle: .phoneNum, 0)
     private let emailTf = BaseTextFieldView(textFieldStyle: .email, 1)
-    private let passwordTf = BaseTextFieldView(textFieldStyle: .password)
+    private let passwordTf = BaseTextFieldView(textFieldStyle: .password, 2)
     private let inputStack =  UIStackView()
     
     private let forgotPasswordBtn = UIButton()
@@ -72,6 +72,7 @@ class LoginViewController: UIViewController {
     private func delegateTextField() {
         phoneTf.inputTf.delegate = self
         emailTf.inputTf.delegate = self
+        passwordTf.inputTf.delegate = self
     }
 
     private func setupUI() {
@@ -173,15 +174,14 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: UITextFieldDelegate {
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let text = textField.text ?? ""
+        
         switch textField.tag {
-        case 0 :
-            phoneTf.layer.borderColor = UIColor.systemGreen.cgColor
-        case 1:
-            emailTf.layer.borderColor = UIColor.systemRed.cgColor
-        default:
-            return
+        case 0: phoneTf.setValidLogin(Validator.isValidPhone(text))
+        case 1: emailTf.setValidLogin(Validator.isValidEmail(text))
+        case 2: passwordTf.setValidLogin(Validator.isValidPassword(text))
+        default: break
         }
     }
 }

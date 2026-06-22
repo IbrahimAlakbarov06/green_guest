@@ -128,10 +128,10 @@ class BaseTextFieldView: UIView {
     
     func setValidRegister(_ isValid: Bool) {
         if isValid {
-            inputTf.backgroundColor = .inputTextFieldBackground
+            self.backgroundColor = .inputTextFieldBackground
             firstLabel.textColor = .maincolour
         } else {
-            inputTf.backgroundColor = .systemGray6
+            self.backgroundColor = .systemGray6
             firstLabel.textColor = .gray
         }
     }
