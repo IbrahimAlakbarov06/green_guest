@@ -72,6 +72,16 @@ class RegisterViewController: UIViewController{
         setupActions()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     private func setupUI() {
         mainLabel.text = "Hesab yaradın"
         mainLabel.textColor = .black
@@ -169,8 +179,17 @@ class RegisterViewController: UIViewController{
     }
 }
 
-
-
-#Preview {
-    RegisterViewController(router: AppRouter())
+extension RegisterViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let text = textField.text ?? ""
+        
+        switch textField.tag {
+        case 0: firstNameTf.setValidRegister(!text.isEmpty)
+        case 1: lastNameTf.setValidRegister(!text.isEmpty)
+        case 2: emailTf.setValidRegister(Validator.isValidEmail(text))
+        case 3: phoneTf.setValidRegister(Validator.isValidPhone(text))
+        case 4: passwordTf.setValidRegister(Validator.isValidPassword(text))
+        default: break
+        }
+    }
 }

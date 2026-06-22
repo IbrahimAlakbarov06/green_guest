@@ -120,6 +120,22 @@ class BaseTextFieldView: UIView {
         }
     }
     
+    func setValidLogin(_ isValid: Bool) {
+        layer.borderWidth = 1.5
+        layer.borderColor = isValid ? UIColor.systemGreen.cgColor
+                                    : UIColor.systemRed.cgColor
+    }
+    
+    func setValidRegister(_ isValid: Bool) {
+        if isValid {
+            inputTf.backgroundColor = .inputTextFieldBackground
+            firstLabel.textColor = .maincolour
+        } else {
+            inputTf.backgroundColor = .systemGray6
+            firstLabel.textColor = .gray
+        }
+    }
+    
     @objc
     private func togglePassword() {
         inputTf.isSecureTextEntry.toggle()
