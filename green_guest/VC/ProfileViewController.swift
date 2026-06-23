@@ -31,7 +31,7 @@ class ProfileViewController: UIViewController{
     private let mainStack = UIStackView()
     
     private let router: AppRouterProtocol
-    private let user: User
+    private var user: User
     
     init(router: AppRouterProtocol, user: User) {
         self.router = router
@@ -145,6 +145,14 @@ class ProfileViewController: UIViewController{
     
     @objc
     private func didTapEditBtn() {
-        router.pushVC(from: self, to: router.updateProfileViewController())
+        let vc = UpdateProfileViewController(router: router, user: user)
+        vc.delegate = self
+        router.pushVC(from: self, to:vc)
+    }
+}
+extension ProfileViewController: UpdateProfileDelegate {
+    func didUpdateProfile(user: User) {
+        self.user = user
+        showEmail()
     }
 }
