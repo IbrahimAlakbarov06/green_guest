@@ -51,7 +51,7 @@ class AppRouter: AppRouterProtocol {
         first.navigationController?.pushViewController(second, animated: true)
     }
     
-    func updateProfileViewController() -> UIViewController {
-        UpdateProfileViewController(router: self)
+    func updateProfileViewController(user: User) -> UIViewController {
+        UpdateProfileViewController(router: self, user: user)
     }
 }

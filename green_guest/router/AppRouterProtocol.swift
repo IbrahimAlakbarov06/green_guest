@@ -19,5 +19,5 @@ protocol AppRouterProtocol {
     func loginViewController() -> UIViewController
     func pushVC(from first: UIViewController, to second: UIViewController)
     func registerViewController() -> UIViewController
-    func updateProfileViewController() -> UIViewController
+    func updateProfileViewController(user: User) -> UIViewController
 }
