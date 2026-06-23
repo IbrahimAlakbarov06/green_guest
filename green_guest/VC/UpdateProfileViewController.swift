@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol UpdateProfileDelegate: AnyObject{
+    func didUpdateProfile(user: User)
+}
+
 class UpdateProfileViewController: UIViewController {
     
     private let emailTf = BaseTextFieldView(textFieldStyle: .email, 1)
@@ -24,10 +28,14 @@ class UpdateProfileViewController: UIViewController {
     private let mainStack = UIStackView()
     
     private let router: AppRouterProtocol
+    private var user: User
+    weak var delegate: UpdateProfileDelegate?
     
-    init(router: AppRouterProtocol) {
+    init(router: AppRouterProtocol, user: User) {
         self.router = router
+        self.user = user
         super.init(nibName: nil, bundle: nil)
+        hidesBottomBarWhenPushed = true
     }
     
     required init?(coder: NSCoder) {
@@ -41,6 +49,12 @@ class UpdateProfileViewController: UIViewController {
         setupUI()
         setupLayout()
         setupActions()
+        delegateTextField()
+    }
+    
+    private func delegateTextField() {
+        phoneTf.inputTf.delegate = self
+        emailTf.inputTf.delegate = self
     }
     
     private func setupUI() {
@@ -88,6 +102,15 @@ class UpdateProfileViewController: UIViewController {
     
     @objc
     private func didTapSubmit() {
+        guard let email = emailTf.text, !email.isEmpty,
+              let phone = phoneTf.text, !phone.isEmpty
+        else { return }
+        
+        var updatedUser = user
+        updatedUser.email = email
+        updatedUser.phone = phone
+        
+        delegate?.didUpdateProfile(user: updatedUser)
         navigationController?.popViewController(animated: true)
     }
 }
