@@ -157,7 +157,9 @@ class LoginViewController: UIViewController {
     
     @objc
     private func didTapRegister() {
-        router.pushVC(from: self, to: router.registerViewController())
+        let vc = RegisterViewController(router: router)
+          vc.delegate = self
+          router.pushVC(from: self, to: vc)
     }
     
     
@@ -183,5 +185,11 @@ extension LoginViewController: UITextFieldDelegate {
         case 2: passwordTf.setValidLogin(Validator.isValidPassword(text))
         default: break
         }
+    }
+}
+
+extension LoginViewController: RegisterDelegate {
+    func didRegister(user: User) {
+        emailTf.inputTf.text = user.email
     }
 }

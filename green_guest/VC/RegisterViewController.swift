@@ -9,6 +9,10 @@ import UIKit
 import SwiftUI
 import SnapKit
 
+protocol RegisterDelegate: AnyObject {
+    func didRegister(user:User)
+}
+
 class RegisterViewController: UIViewController{
     
     private let languageSwitchStack = LanguageSwitchView()
@@ -52,6 +56,8 @@ class RegisterViewController: UIViewController{
     
     private let mainStack = UIStackView()
     private let scrollView = UIScrollView()
+    
+    weak var delegate: RegisterDelegate?
     
     private let router: AppRouterProtocol
     
@@ -185,6 +191,17 @@ class RegisterViewController: UIViewController{
     
     @objc
     private func didTapLoginBtn() {
+        guard let nameString = firstNameTf.text, !nameString.isEmpty,
+              let surnameString = lastNameTf.text, !surnameString.isEmpty,
+              let emailString = emailTf.text, !emailString.isEmpty,
+              let phoneString = phoneTf.text, !phoneString.isEmpty,
+              let passwordString = passwordTf.text, !passwordString.isEmpty else{
+            return
+        }
+        
+        var updatedUser = User(name: nameString, surname: surnameString, phone: phoneString, email: emailString, password: passwordString)
+        
+        delegate?.didRegister(user: updatedUser)
         navigationController?.popViewController(animated: true)
     }
 }
